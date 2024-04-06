@@ -1,5 +1,6 @@
 from web3 import Web3
 import json
+import base64
 
 # Load the contract ABI from the JSON file
 with open('PdfStorage.json') as f:
@@ -19,4 +20,8 @@ contract = web3.eth.contract(address=contract_address, abi=contract_abi)
 page_number = 1  # Adjust the page number as needed
 pdf_data = contract.functions.getPdf(page_number).call()
 
-print("PDF Data:", pdf_data)
+# Decode the base64 encoded PDF data
+decoded_pdf_data = base64.b64decode(pdf_data).decode('utf-8')
+
+# Print the decoded PDF content
+print("Decoded PDF Content:", decoded_pdf_data)
